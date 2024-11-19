@@ -358,9 +358,6 @@ CREATE VIEW vInventoriesByProductsByCategories
 
 GO
 
-
-GO
-
 -- Question 7 (10% pts): How can you create a view to show a list of Categories, Products, 
 -- the Inventory Date and Count of each product, and the EMPLOYEE who took the count?
 -- Order the results by the Inventory Date, Category, Product and Employee!
