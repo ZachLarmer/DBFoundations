@@ -243,13 +243,13 @@ ORDER BY CategoryName, ProductName;
 Go
 
 CREATE VIEW vProductsByCategories
-    As
-        SELECT TOP 100000000
-		CategoryName, 
-		ProductName
-        FROM vCategories JOIN vProducts
-                ON vCategories.CategoryID = vProducts.CategoryID
-		ORDER BY CategoryName, ProductName;
+	As
+		SELECT TOP 100000000
+			CategoryName, 
+			ProductName
+	        FROM vCategories JOIN vProducts
+	                ON vCategories.CategoryID = vProducts.CategoryID
+			ORDER BY CategoryName, ProductName;
 
 Go
 
