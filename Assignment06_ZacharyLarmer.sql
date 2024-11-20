@@ -515,7 +515,7 @@ GO
 
 CREATE VIEW vInventoriesByProductsByCategoriesByEmployees
 	AS
-		SELECT 10000000
+		SELECT TOP 10000000
 			C.CategoryID,
 			C.CategoryName,
 			P.ProductID,
