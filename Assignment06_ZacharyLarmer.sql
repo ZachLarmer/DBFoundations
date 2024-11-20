@@ -515,7 +515,7 @@ GO
 
 CREATE VIEW vInventoriesByProductsByCategoriesByEmployees
 	AS
-		SELECT TOP 10000000
+		SELECT 10000000
 			C.CategoryID,
 			C.CategoryName,
 			P.ProductID,
@@ -529,11 +529,11 @@ CREATE VIEW vInventoriesByProductsByCategoriesByEmployees
 			(M.EmployeeFirstName + ' '+ M.EmployeeLastName) AS Manager
 		FROM vProducts AS P JOIN vCategories AS C
 				ON P.CategoryID = C.CategoryID
-			LEFT JOIN vInventories AS I
+			JOIN vInventories AS I
 				ON P.ProductID = I.ProductID
-			LEFT JOIN vEmployees AS E
+			JOIN vEmployees AS E
 				ON I.EmployeeID = E.EmployeeID
-			LEFT JOIN vEmployees AS M
+			JOIN vEmployees AS M
 				ON E.ManagerID = M.EmployeeID	
 		ORDER BY C.CategoryID, P.ProductName, I.InventoryID, Employee;
 
