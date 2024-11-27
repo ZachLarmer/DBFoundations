@@ -57,7 +57,7 @@ Begin  -- Categories
 	Alter Table Categories 
 	 Add Constraint pkCategories 
 	  Primary Key (CategoryId);
-	
+
 	Alter Table Categories 
 	 Add Constraint ukCategories 
 	  Unique (CategoryName);
@@ -121,22 +121,22 @@ go
 Insert Into Categories 
 (CategoryName)
 Select CategoryName 
-From Northwind.dbo.Categories
-Order By CategoryID;
+ From Northwind.dbo.Categories
+ Order By CategoryID;
 go
 
 Insert Into Products
 (ProductName, CategoryID, UnitPrice)
 Select ProductName,CategoryID, UnitPrice 
-From Northwind.dbo.Products
-Order By ProductID;
+ From Northwind.dbo.Products
+  Order By ProductID;
 go
 
 Insert Into Employees
 (EmployeeFirstName, EmployeeLastName, ManagerID)
 Select E.FirstName, E.LastName, IsNull(E.ReportsTo, E.EmployeeID) 
-From Northwind.dbo.Employees as E
-Order By E.EmployeeID;
+ From Northwind.dbo.Employees as E
+  Order By E.EmployeeID;
 go
 
 Insert Into Inventories
@@ -180,28 +180,28 @@ CREATE VIEW vCategories
 WITH SCHEMABINDING
 	AS
 		SELECT CategoryID, CategoryName 
-        	FROM dbo.Categories;
+        FROM dbo.Categories;
 GO
 
 CREATE VIEW vProducts
 WITH SCHEMABINDING
 	AS
 		SELECT ProductID, ProductName, CategoryID, UnitPrice 
-        	FROM dbo.Products;
+        FROM dbo.Products;
 GO
 
 CREATE VIEW vEmployees
 WITH SCHEMABINDING
 	AS
 		SELECT EmployeeID, EmployeeFirstName, EmployeeLastName, ManagerID 
-        	FROM dbo.Employees;
+        FROM dbo.Employees;
 GO
 
 CREATE VIEW vInventories
 WITH SCHEMABINDING
 	AS
 		SELECT InventoryID, InventoryDate, EmployeeID, ProductID, [Count] 
-        	FROM dbo.Inventories;
+        FROM dbo.Inventories;
 GO
 
 -- Question 2 (5% pts): How can you set permissions, so that the public group CANNOT select data 
@@ -243,13 +243,13 @@ ORDER BY CategoryName, ProductName;
 Go
 
 CREATE VIEW vProductsByCategories
-	As
-		SELECT TOP 100000000
-			CategoryName, 
-			ProductName
-	        FROM vCategories JOIN vProducts
-	                ON vCategories.CategoryID = vProducts.CategoryID
-			ORDER BY CategoryName, ProductName;
+    As
+        SELECT TOP 100000000
+				CategoryName, 
+				ProductName
+        FROM vCategories JOIN vProducts
+                ON vCategories.CategoryID = vProducts.CategoryID
+		ORDER BY CategoryName, ProductName;
 
 Go
 
@@ -355,6 +355,9 @@ CREATE VIEW vInventoriesByProductsByCategories
 		JOIN vInventories
 			ON vProducts.ProductID = vInventories.ProductID
 		ORDER BY CategoryName, ProductName, InventoryDate, [Count];
+
+GO
+
 
 GO
 
@@ -502,11 +505,11 @@ SELECT
 	(M.EmployeeFirstName + ' '+ M.EmployeeLastName) AS Manager
 FROM vProducts AS P JOIN vCategories AS C
 		ON P.CategoryID = C.CategoryID
-	LEFT JOIN vInventories AS I
+	JOIN vInventories AS I
 		ON P.ProductID = I.ProductID
-	LEFT JOIN vEmployees AS E
+	JOIN vEmployees AS E
 		ON I.EmployeeID = E.EmployeeID
-	LEFT JOIN vEmployees AS M
+	JOIN vEmployees AS M
 		ON E.ManagerID = M.EmployeeID	
 ORDER BY C.CategoryID, P.ProductName, I.InventoryID, Employee;
 */
@@ -528,7 +531,7 @@ CREATE VIEW vInventoriesByProductsByCategoriesByEmployees
 			(E.EmployeeFirstName + ' ' + E.EmployeeLastName) AS Employee,
 			(M.EmployeeFirstName + ' '+ M.EmployeeLastName) AS Manager
 		FROM vProducts AS P JOIN vCategories AS C
-				ON P.CategoryID = C.CategoryID
+				ON C.CategoryID = P.CategoryID
 			JOIN vInventories AS I
 				ON P.ProductID = I.ProductID
 			JOIN vEmployees AS E
